@@ -17,5 +17,6 @@ RUN ./configure
 RUN make
 RUN make install
 
-COPY entrypoint.sh entrypoint.sh
-CMD ["./entrypoint.sh"]
+COPY entrypoint.sh /tipcutils/entrypoint.sh
+RUN chmod +x /tipcutils/entrypoint.sh
+CMD ["/tipcutils/entrypoint.sh"]
