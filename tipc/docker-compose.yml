@@ -1,0 +1,11 @@
+services:
+  tipc-node:
+    image: tipc
+    tty: true
+    privileged: true
+    networks:
+      - tipc_network
+
+networks:
+  tipc_network:
+    driver: bridge
