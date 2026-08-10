@@ -1,0 +1,23 @@
+services:
+    iproute2:
+        image: iproute2
+        build:
+            context: .
+            dockerfile: Dockerfile
+        privileged: true
+        networks:
+            - iproute2_network
+        volumes:
+            - "space:/space"
+
+networks:
+    iproute2_network:
+        driver: bridge
+
+volumes:
+    space:
+        driver: local
+        driver_opts:
+            type: volume
+            o: bind
+            device: /space
