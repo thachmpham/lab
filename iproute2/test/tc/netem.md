@@ -1,4 +1,11 @@
 # Traffic Control Network Emulator (tc netem)
+Emulate network errors:
+- Delay.
+- Loss.
+- Corrupt.
+- Duplicate.
+- Reorder.
+
 
 # Setup Lab
 - Start cluster.
@@ -21,7 +28,7 @@ eth0@if98        UP             172.18.0.2/16
 node2$ ip -br addr
 eth0@if99        UP             172.18.0.3/16
 
-node1$ ping ping -c 10 172.18.0.3
+node1$ ping -c 10 172.18.0.3
 PING 172.18.0.3 (172.18.0.3): 56 data bytes
 64 bytes from 172.18.0.3: icmp_seq=0 ttl=64 time=0.187 ms
 64 bytes from 172.18.0.3: icmp_seq=1 ttl=64 time=0.166 ms
@@ -39,7 +46,7 @@ round-trip min/avg/max/stddev = 0.121/0.226/0.283/0.049 ms
 ```
 
 
-# TC NetEm Delay
+# Delay
 ```sh
 node1$ tc qdisc add dev eth0 root netem delay 500ms
 
@@ -61,6 +68,27 @@ PING 172.18.0.3 (172.18.0.3): 56 data bytes
 --- 172.18.0.3 ping statistics ---
 10 packets transmitted, 10 packets received, 0% packet loss
 round-trip min/avg/max/stddev = 501.120/507.954/511.133/3.929 ms
+
+node1$ tc qdisc delete dev eth0 root
+```
+
+
+# Loss
+```sh
+node1$ tc qdisc add dev eth0 root netem loss 50%
+
+node$ tc qdisc show dev eth0
+qdisc netem 8002: root refcnt 9 limit 1000 loss 50%
+
+node1$ ping -c 10 172.18.0.3
+PING 172.18.0.3 (172.18.0.3): 56 data bytes
+64 bytes from 172.18.0.3: icmp_seq=0 ttl=64 time=0.215 ms
+64 bytes from 172.18.0.3: icmp_seq=2 ttl=64 time=0.295 ms
+64 bytes from 172.18.0.3: icmp_seq=5 ttl=64 time=0.262 ms
+64 bytes from 172.18.0.3: icmp_seq=6 ttl=64 time=0.285 ms
+--- 172.18.0.3 ping statistics ---
+10 packets transmitted, 4 packets received, 60% packet loss
+round-trip min/avg/max/stddev = 0.215/0.264/0.295/0.031 ms
 
 node1$ tc qdisc delete dev eth0 root
 ```
