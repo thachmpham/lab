@@ -4,8 +4,8 @@
 # Setup Lab
 - Create shared folder for host and containers.
 ```sh
-host$ mkdir /space
-host$ chmod -R 777 /space
+host$ mkdir ~/space
+host$ chmod -R 777 ~/space
 ```
 
 - Setup containers.

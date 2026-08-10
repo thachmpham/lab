@@ -1,10 +1,23 @@
 services:
-  tipc-node:
-    image: tipc
-    privileged: true
-    networks:
-      - tipc_network
+    tipc:
+        image: tipc
+        build:
+            context: .
+            dockerfile: Dockerfile
+        privileged: true
+        networks:
+            - tipc_network
+        volumes:
+            - space:/space
 
 networks:
-  tipc_network:
-    driver: bridge
+    tipc_network:
+        driver: bridge
+
+volumes:
+    space:
+        driver: local
+        driver_opts:
+            type: none
+            o: bind
+            device: ~/space
