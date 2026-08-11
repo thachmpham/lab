@@ -1,0 +1,24 @@
+services:
+    node1:
+        container_name: node1
+        image: iproute2
+        build: .
+        networks:
+            - network_a
+    node2:
+        container_name: node2
+        image: iproute2
+        networks:
+            - network_a
+            - network_b
+    node3:
+        container_name: node3
+        image: iproute2
+        networks:
+            - network_b
+
+networks:
+    network_a:
+        driver: bridge
+    network_b:
+        driver: bridge
