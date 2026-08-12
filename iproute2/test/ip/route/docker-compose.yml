@@ -3,17 +3,22 @@ services:
         container_name: node1
         image: iproute2
         build: .
+        privileged: true
         networks:
             - network_a
     node2:
         container_name: node2
-        image: iproute2
+        image: iproute2        
+        privileged: true
+        sysctls:
+            net.ipv4.ip_forward: 1
         networks:
             - network_a
             - network_b
     node3:
         container_name: node3
         image: iproute2
+        privileged: true
         networks:
             - network_b
 
