@@ -92,7 +92,7 @@ root@h2:/# ip route get 10.0.0.2
 ```
 
 
-# Ping Test
+# Ping Check
 - Ping: h1 => h2.
 ```sh
 root@h1:/# ping -c3 20.0.0.2
@@ -131,7 +131,7 @@ traceroute to 10.0.0.2 (10.0.0.2), 30 hops max, 60 byte packets
 ```
 
 
-# IP Forward Test
+# IP Forward Check
 ## Check Counters
 - Counters before ping.
 ```sh
@@ -253,6 +253,32 @@ root@h2:/# tshark -i eth0
    31 450.082811014 f6:13:8f:dc:3f:4e ? 86:59:0d:73:12:83 ARP 42 20.0.0.2 is at f6:13:8f:dc:3f:4e
    32 450.082819472 86:59:0d:73:12:83 ? f6:13:8f:dc:3f:4e ARP 42 20.0.0.100 is at 86:59:0d:73:12:83
 ```
+
+
+# Disable IP Forward
+- Disable ip forward on router.
+```sh
+root@rt:/# sysctl -w net.ipv4.ip_forward=0
+net.ipv4.ip_forward = 0
+```
+
+- Ping: h1 => h2. Result: 100% packet loss.
+```sh
+root@h1:/# ping -c3 20.0.0.2
+PING 20.0.0.2 (20.0.0.2) 56(84) bytes of data.
+
+--- 20.0.0.2 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2082ms
+```
+
+- Enable ip forward on router.
+```sh
+root@rt:/# sysctl -w net.ipv4.ip_forward=1
+net.ipv4.ip_forward = 1
+```
+
+
+
 
 
 # References
