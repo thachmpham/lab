@@ -1,29 +1,43 @@
 services:
-    node1:
-        container_name: node1
+    h1:
+        container_name: h1
+        hostname: h1
         image: iproute2
         build: .
         privileged: true
         networks:
-            - network_a
-    node2:
-        container_name: node2
-        image: iproute2        
+            network_a:
+                ipv4_address: 10.0.0.2
+    rt:
+        container_name: rt
+        hostname: rt
+        image: iproute2
         privileged: true
         sysctls:
             net.ipv4.ip_forward: 1
         networks:
-            - network_a
-            - network_b
-    node3:
-        container_name: node3
+            network_a:
+                ipv4_address: 10.0.0.100
+            network_b:
+                ipv4_address: 20.0.0.100
+    h2:
+        container_name: h2
+        hostname: h2
         image: iproute2
         privileged: true
         networks:
-            - network_b
+            network_b:
+                ipv4_address: 20.0.0.2
+
 
 networks:
     network_a:
         driver: bridge
+        ipam:
+            config:
+                - subnet: 10.0.0.0/24
     network_b:
         driver: bridge
+        ipam:
+            config:
+                - subnet: 20.0.0.0/24
