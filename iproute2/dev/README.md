@@ -1,19 +1,23 @@
 
 # IPROUTE2
 
-# Setup Lab
-- Create shared folder for host and containers.
+
+# Build
+- Create shared folder.
 ```sh
 host$ mkdir ~/space
 host$ chmod -R 777 ~/space
 ```
 
-- Setup containers.
+- Build.
 ```sh
+host$ cd lab/iproute2/dev
+host$ docker compose build
 host$ docker compose up --detach
 ```
 
-# Test
+
+# Run Testcases
 - Access container.
 ```sh
 host$ docker exec -it iproute2-iproute2-1 bash
