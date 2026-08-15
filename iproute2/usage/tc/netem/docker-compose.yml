@@ -1,0 +1,25 @@
+services:
+    h1:
+        container_name: h1
+        hostname: h1
+        image: iproute2
+        build: .
+        privileged: true
+        networks:
+            network_a:
+                ipv4_address: 10.0.0.2
+    h2:
+        container_name: h2
+        hostname: h2
+        image: iproute2
+        privileged: true
+        networks:
+            network_a:
+                ipv4_address: 10.0.0.3
+
+networks:
+    network_a:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.0.0.0/24
