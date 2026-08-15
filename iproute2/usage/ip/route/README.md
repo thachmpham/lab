@@ -278,8 +278,5 @@ net.ipv4.ip_forward = 1
 ```
 
 
-
-
-
 # References
 - https://github.com/torvalds/linux/blob/master/tools/testing/selftests/net/forwarding/router.sh
