@@ -1,0 +1,48 @@
+services:
+    h1:
+        container_name: h1
+        hostname: h1
+        image: tipc
+        build: .
+        privileged: true
+        networks:
+            - network_a
+            - network_b
+        environment:
+            - tipc_address=1.1.1
+    h2:
+        container_name: h2
+        hostname: h2
+        image: tipc
+        privileged: true
+        networks:
+            - network_a
+            - network_b
+        environment:
+            - tipc_address=1.1.2
+    h3:
+        container_name: h3
+        hostname: h3
+        image: tipc
+        privileged: true
+        networks:
+            - network_a
+            - network_b
+        environment:
+            - tipc_address=1.1.3
+    h4:
+        container_name: h4
+        hostname: h4
+        image: tipc
+        privileged: true
+        networks:
+            - network_a
+            - network_b
+        environment:
+            - tipc_address=1.1.4
+
+networks:
+    network_a:
+        driver: bridge
+    network_b:
+        driver: bridge
