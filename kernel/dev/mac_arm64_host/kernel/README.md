@@ -42,5 +42,5 @@ root@k1:/linux# ./build.sh
 
 # Run Kernel
 ```sh
-root@k1:/linux# /space/run.sh
+root@k1:/linux# ./run.sh
 ```
