@@ -44,3 +44,5 @@ root@k1:/linux# ./build.sh
 ```sh
 root@k1:/linux# ./run.sh
 ```
+
+To exit: Ctrl + A, X
