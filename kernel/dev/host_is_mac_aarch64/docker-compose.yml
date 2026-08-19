@@ -1,6 +1,0 @@
-services:
-    h1:
-        container_name: h1
-        hostname: h1
-        image: kernel
-        build: .
