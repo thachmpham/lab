@@ -1,0 +1,8 @@
+services:
+    buildroot:
+        container_name: b1
+        hostname: b1
+        image: buildroot
+        build: .
+        volumes:
+            - ~/space:/space
