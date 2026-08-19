@@ -26,11 +26,7 @@ root@k1:/linux# make defconfig
 root@k1:/linux# ./build.sh
 ```
 
-- Output copied to shared folder.
-```sh
-root@k1:/space# ls
-Image
-```
+- Output copied to shared folder: /space/Image
 
 
 # Customize Kernel
