@@ -22,6 +22,7 @@ host$ docker exec -it b1 bash
 
 - Build filesystem image.
 ```sh
+root@b1:/buildroot# make defconfig
 root@b1:/buildroot# ./build.sh
 ```
 
