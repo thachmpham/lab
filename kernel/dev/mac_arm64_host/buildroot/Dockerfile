@@ -13,10 +13,8 @@ RUN rm -f xf buildroot-2025.05.tar.gz
 RUN mv buildroot-2025.05 buildroot
 
 WORKDIR /buildroot
-COPY ./config /buildroot/.config
 COPY ./build.sh /buildroot
 
 RUN mkdir -p /space
-# RUN ./build.sh
 
 CMD ["tail", "-f", "/dev/null"]
