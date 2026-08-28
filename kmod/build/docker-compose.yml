@@ -1,0 +1,10 @@
+services:
+    kmod:
+        image: kmod
+        build: .
+        container_name: kmod
+        hostname: kmod
+        privileged: true
+        volumes:
+            - /lib:/lib
+            - /usr/src:/usr/src
