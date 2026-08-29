@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 RUN apt update
-RUN apt install -y wget build-essential zlib1g-dev liblzma-dev vim
+RUN apt install -y wget build-essential zlib1g-dev liblzma-dev
 
 RUN wget https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-29.tar.gz
 RUN tar xf kmod-29.tar.gz

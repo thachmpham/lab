@@ -28,8 +28,8 @@ root@b1:/buildroot# ./build.sh
 ```
 
 Options in menuconfig:
-    - Target options / Target Architecture / AArch64 (little endian)
-    - System configuration / Run a getty (login prompt) after boot / TTY port / ttyAMA0
+    - Target options / Target Architecture / x86_64
+    - System configuration / Run a getty (login prompt) after boot / TTY port / ttyS0
     - Target packages / Hardware handling / pciutils
     - Filesystem images / ext2/3/4 root filesystem / ext2
 
@@ -42,3 +42,4 @@ Options in menuconfig:
 root@b1:/buildroot# make menuconfig
 root@b1:/buildroot# ./build.sh
 ```
+

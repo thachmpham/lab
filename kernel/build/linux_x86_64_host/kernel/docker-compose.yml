@@ -1,0 +1,9 @@
+services:
+    kernel:
+        container_name: k1
+        hostname: k1
+        image: kernel
+        build: .
+        privileged: true
+        volumes:
+            - ~/space:/space
