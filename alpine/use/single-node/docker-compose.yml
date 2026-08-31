@@ -1,7 +1,7 @@
 services:
-    ap:
-        image: ap
+    apk:
+        image: apk
         build: .
-        container_name: ap
-        hostname: ap
+        container_name: apk
+        hostname: container
         privileged: true
