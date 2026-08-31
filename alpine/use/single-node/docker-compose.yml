@@ -1,0 +1,7 @@
+services:
+    ap:
+        image: ap
+        build: .
+        container_name: ap
+        hostname: ap
+        privileged: true
