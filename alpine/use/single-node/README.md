@@ -1,97 +1,110 @@
 # Alpine: Single Node Setup
 
++------- host ----------+
+| +----- container --+  |
+| |   +- vm ---+     |  |
+| |   |        |     |  |
+| |   +--------+     |  |
+| +------------------+  |
++-----------------------+
 
-# Setup Container
+
+# 1. Setup Container
+- Create container.
 ```sh
 host$ docker compose build
 host$ docker compose up --detach
 ```
 
-
-# Install
 - Access container.
 ```sh
-host$ docker exec -it ap bash
+host$ docker exec -it apk bash
 ```
 
-- Download iso.
+# 2. Setup VM
+- Create VM.
 ```sh
-container$ wget https://dl-cdn.alpinelinux.org/alpine/v3.24/releases/x86_64/alpine-standard-3.24.1-x86_64.iso
+container$ /ws/create_vm.sh
 ```
 
-- Create disk image.
-```sh
-container$ qemu-img create -f qcow2 alpine.qcow2 8G
-```
-
-- Install.
-```sh
-container$ qemu-system-x86_64 -m 1024 -nic user -boot once=d -cdrom alpine-standard-3.24.1-x86_64.iso -drive file=alpine.qcow2 -nographic
-```
-
-- Within VM, install alpine.
+- Install alpine to VM.
 ```sh
 vm$ setup-alpine
-# - Keyboard: us
-# - Hostname: localhost
-# - Network: eth0, dhcp
-# - Password:
-# - Timezone: your timezone
-# - Disk: sda, sys (use entire disk)
+# - hostname:   vm1
+# - interface:  eth0
+# - ipv4 addr:  dhcp
+# - ipv6 addr:  auto
+# - manual network config:  no
+# - password:
+# - timezone:   UTC
+# - proxy:      none
+# - ntp:        busybox
+# - apk mirror: 1
+# - setup user: no
+# - ssh server: openssh
+# - allow root ssh: yes
+# - ssh key:    none
+# - disk:       sda, sys
 
 # after setup done
-vm$ reboot
+vm$ poweroff
 ```
 
-- Later boot.
+- Start VM.
 ```sh
-container$ qemu-system-x86_64 -m 1024 -nic user -drive file=alpine.qcow2 -nographic
+container$ /ws/start_vm.sh
 ```
 
 
-# Shortcuts
-- To exit:
-    - Ctrl A + X
-    - poweroff
+# 3. Setup SSH
 
+```go
+container               vm
+192.0.0.2            192.0.0.3
+   br0                  eth1
+    +                    +
+    +--------------------+
+```
 
-
-# Setup Network Devices
+- Setup static IP.
 ```sh
-container$ ip link add name br-testlab type bridge
-container$ ip addr add 10.0.100.1/24 dev br-testlab
-container$ ip link set br-testlab up
+vm$ cat /etc/network/interfaces
+auto lo
+iface lo inet loopback
 
-container$ sysctl -w net.ipv4.ip_forward=1
+auto eth0
+iface eth0 inet dhcp
+hostname alpine-test
 
-container$ ip tuntap add tap0 mode tap user root
-container$ ip link set tap0 master br-testlab
-container$ ip link set tap0 up
+auto eth1
+iface eth1 inet static
+    address 192.0.0.3
+    netmask 255.255.255.0
 
-container$ ip tuntap add tap1 mode tap user root
-container$ ip link set tap1 master br-testlab
-container$ ip link set tap1 up
+vm$ rc-service networking restart
 
-container$ ip tuntap add tap2 mode tap user root
-container$ ip link set tap2 master br-testlab
-container$ ip link set tap2 up
+vm$ ip addr show
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    inet 192.0.0.3/24 scope global eth1
 ```
 
+- Permit root login.
 ```sh
-container$ qemu-system-x86_64 \
-  -name gateway \
-  -m 1024 \
-  -smp 2 \
-  -hda alpine.qcow2 \
-  -netdev tap,id=net0,ifname=tap0,script=no,downscript=no \
-  -device virtio-net-pci,netdev=net0,mac=52:54:00:12:34:00 \
-  -netdev user,id=net1 \
-  -device virtio-net-pci,netdev=net1,mac=52:54:00:12:34:01 \
-  -nographic \
-  -serial mon:stdio
+vm$ cat /etc/ssh/sshd_config
+PermitRootLogin yes
+
+vm$ rc-service sshd restart
 ```
+
+- From container, ssh to vm.
+```sh
+container$ ssh root@192.0.0.3
+```
+
 
 # References
 - https://wiki.alpinelinux.org/wiki/Installation
 - https://wiki.alpinelinux.org/wiki/QEMU
 - https://dev.to/zrouga/building-a-security-test-lab-with-qemu-from-zero-to-network-monitoring-4onm
+- https://wiki.qemu.org/Features/HelperNetworking
+- https://wiki.alpinelinux.org/wiki/Setting_up_a_SSH_server
