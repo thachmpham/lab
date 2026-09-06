@@ -1,0 +1,7 @@
+services:
+    pxe:
+        image: pxe
+        build: .
+        container_name: pxe
+        hostname: pxe
+        privileged: true

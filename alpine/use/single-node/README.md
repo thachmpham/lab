@@ -68,7 +68,7 @@ container               vm
 
 - Setup static IP.
 ```sh
-vm$ cat /etc/network/interfaces
+vm$ vi /etc/network/interfaces
 auto lo
 iface lo inet loopback
 
@@ -90,7 +90,7 @@ vm$ ip addr show
 
 - Permit root login.
 ```sh
-vm$ cat /etc/ssh/sshd_config
+vm$ vi /etc/ssh/sshd_config
 PermitRootLogin yes
 
 vm$ rc-service sshd restart

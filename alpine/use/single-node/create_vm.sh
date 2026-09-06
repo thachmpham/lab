@@ -17,5 +17,5 @@ qemu-system-x86_64 -name vm1 \
     -smp cpus=2 \
     -nic user \
     -boot once=d -cdrom $iso_file \
-    -drive $disk_file \
+    -drive file=$disk_file \
     -nographic

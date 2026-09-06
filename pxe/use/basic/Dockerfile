@@ -1,0 +1,46 @@
+FROM ubuntu:26.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update
+RUN apt install -y isc-dhcp-server tftpd-hpa nfs-kernel-server rsyslog
+RUN apt install -y qemu-system syslinux-common pxelinux debootstrap
+RUN apt install -y wget vim iproute2 perl
+
+# setup qemu
+RUN mkdir -p /etc/qemu
+RUN touch /etc/qemu/bridge.conf
+RUN chmod 0640 /etc/qemu/bridge.conf
+RUN echo "allow br0" >> /etc/qemu/bridge.conf
+RUN chmod u+s /usr/lib/qemu/qemu-bridge-helper
+
+# setup dhcp server
+RUN perl -pi -e 's/INTERFACESv4=""/INTERFACESv4="br0"/g' /etc/default/isc-dhcp-server
+RUN cat << 'EOF' >> /etc/dhcp/dhcpd.conf
+allow booting;
+allow bootp;
+subnet 192.0.0.0 netmask 255.255.255.0 {
+        range 192.0.0.100 192.0.0.150;
+        option domain-name-servers 192.0.0.2;
+        option broadcast-address 192.0.0.255;
+        next-server 192.0.0.2;
+        option subnet-mask 255.255.255.0;
+        filename "/pxelinux.0";
+}
+EOF
+
+# setup tftp server
+RUN perl -pi -e 's/TFTP_DIRECTORY=.*/TFTP_DIRECTORY="/srv/tftp"/g' /etc/default/tftpd-hpa
+RUN perl -pi -e 's/TFTP_OPTIONS=.*/TFTP_OPTIONS="--secure -vvv"/g' /etc/default/tftpd-hpa
+
+# setup nfs
+RUN mkdir -p /srv/nfs
+RUN echo '/srv/nfs *(rw,sync,no_subtree_check,no_root_squash)' > /etc/exports
+
+# setup workspace
+RUN mkdir ws
+WORKDIR /ws
+
+COPY entrypoint.sh /ws
+
+CMD ["/ws/entrypoint.sh"]
