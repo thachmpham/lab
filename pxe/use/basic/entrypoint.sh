@@ -8,6 +8,5 @@ ip addr add 192.0.0.2/24 dev br0
 
 service isc-dhcp-server restart
 service tftpd-hpa restart
-service nfs-kernel-server restart
 
 tail -f /var/log/syslog

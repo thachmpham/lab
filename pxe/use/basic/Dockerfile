@@ -3,7 +3,7 @@ FROM ubuntu:26.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
-RUN apt install -y isc-dhcp-server tftpd-hpa nfs-kernel-server rsyslog
+RUN apt install -y isc-dhcp-server tftpd-hpa rsyslog
 RUN apt install -y qemu-system syslinux-common pxelinux debootstrap
 RUN apt install -y wget vim iproute2 perl
 
@@ -30,17 +30,22 @@ subnet 192.0.0.0 netmask 255.255.255.0 {
 EOF
 
 # setup tftp server
-RUN perl -pi -e 's/TFTP_DIRECTORY=.*/TFTP_DIRECTORY="/srv/tftp"/g' /etc/default/tftpd-hpa
+RUN mkdir -p /srv/tftp
+RUN perl -pi -e 's/TFTP_DIRECTORY=.*/TFTP_DIRECTORY="\/srv\/tftp"/g' /etc/default/tftpd-hpa
 RUN perl -pi -e 's/TFTP_OPTIONS=.*/TFTP_OPTIONS="--secure -vvv"/g' /etc/default/tftpd-hpa
 
-# setup nfs
-RUN mkdir -p /srv/nfs
-RUN echo '/srv/nfs *(rw,sync,no_subtree_check,no_root_squash)' > /etc/exports
+# download boot files to tftp directory
+WORKDIR /srv/tftp
+RUN wget http://archive.ubuntu.com/ubuntu/dists/bionic-updates/main/installer-amd64/current/images/netboot/netboot.tar.gz
+RUN tar xf netboot.tar.gz
+RUN rm -f netboot.tar.gz
+RUN echo 'console 0' >> /srv/tftp/pxelinux.cfg/default
+RUN echo 'serial 0 19200 0' >> /srv/tftp/pxelinux.cfg/default
+RUN perl -pi -e 's/--- quiet/--- console=ttyS0,19200 earlyprint=serial,ttyS0,19200/g' /srv/tftp/ubuntu-installer/amd64/boot-screens/txt.cfg
 
-# setup workspace
-RUN mkdir ws
+# helper scripts
+RUN mkdir /ws
 WORKDIR /ws
-
-COPY entrypoint.sh /ws
+COPY entrypoint.sh start_vm.sh /ws
 
 CMD ["/ws/entrypoint.sh"]
