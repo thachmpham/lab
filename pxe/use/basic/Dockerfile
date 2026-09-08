@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y isc-dhcp-server tftpd-hpa rsyslog
 RUN apt install -y qemu-system syslinux-common pxelinux debootstrap
-RUN apt install -y wget vim iproute2 perl
+RUN apt install -y wget vim iproute2 perl lsof file
 
 # setup qemu
 RUN mkdir -p /etc/qemu
@@ -21,7 +21,6 @@ allow booting;
 allow bootp;
 subnet 192.0.0.0 netmask 255.255.255.0 {
         range 192.0.0.100 192.0.0.150;
-        option domain-name-servers 192.0.0.2;
         option broadcast-address 192.0.0.255;
         next-server 192.0.0.2;
         option subnet-mask 255.255.255.0;
