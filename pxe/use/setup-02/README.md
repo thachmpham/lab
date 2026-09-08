@@ -1,5 +1,13 @@
 # Setup PXE Boot
 
+- PXE server
+    - Ubuntu container.
+    - isc-dhcp-server
+    - atftpd
+
+- PXE client
+    - qemu
+
 
 # Setup container
 - Create container.
@@ -18,19 +26,18 @@ host$ docker exec -it pxe bash
 - Check ports: dhcp (67), tftp (69).
 ```sh
 pxe$ lsof -P -i -n
-COMMAND  PID USER FD   TYPE DEVICE SIZE/OFF NODE NAME
-dhcpd     46 root 8u  IPv4   1356      0t0  UDP *:67
-in.tftpd  60 root 4u  IPv4   4454      0t0  UDP *:69
-in.tftpd  60 root 5u  IPv6   4455      0t0  UDP *:69
+COMMAND PID   USER FD   TYPE DEVICE SIZE/OFF NODE NAME
+dhcpd    46   root 8u  IPv4   9300      0t0  UDP *:67
+atftpd   59 nobody 0u  IPv6   8401      0t0  UDP *:69
 ```
 
 
 - Check dhcp, tftp process.
 ```sh
-pxe$ px ax | grep -P 'dhcp|tftp'
+pxe$ ps ax | grep -P 'dhcp|tftp'
   PID TTY      STAT   TIME COMMAND
    46 ?        Ss     0:00 /usr/sbin/dhcpd -4 -q -cf /etc/dhcp/dhcpd.conf br0
-   60 ?        Ss     0:00 /usr/sbin/in.tftpd --listen --user tftp --address :69 --secure -vvv /srv/tftp
+   59 ?        Ss     0:00 /usr/sbin/atftpd --daemon --port 69 --verbose=7 /srv/tftp
 ```
 
 
@@ -63,12 +70,8 @@ INTERFACESv4="br0"
 
 - Show tftp config.
 ```sh
-pxe$ cat /etc/default/tftpd-hpa
-
-TFTP_USERNAME="tftp"
-TFTP_DIRECTORY="/srv/tftp"
-TFTP_ADDRESS=":69"
-TFTP_OPTIONS="--secure -vvv"
+pxe$ cat /etc/default/atftpd
+OPTIONS="--port 69 --verbose=7 /srv/tftp"
 ```
 
 
