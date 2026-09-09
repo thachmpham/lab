@@ -1,0 +1,7 @@
+services:
+    apk:
+        image: apk
+        build: .
+        container_name: apk
+        hostname: container
+        privileged: true
