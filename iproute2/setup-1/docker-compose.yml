@@ -1,0 +1,46 @@
+services:
+    h1:
+        container_name: h1
+        hostname: h1
+        image: iproute2
+        build: .
+        privileged: true
+        networks:
+            network_a:
+                ipv4_address: 10.0.0.2
+        entrypoint: /ws/entrypoint_h1.sh
+    h2:
+        container_name: h2
+        hostname: h2
+        image: iproute2
+        privileged: true
+        networks:
+            network_b:
+                ipv4_address: 20.0.0.2
+        entrypoint: /ws/entrypoint_h2.sh
+    rt:
+        container_name: rt
+        hostname: rt
+        image: iproute2
+        privileged: true
+        sysctls:
+            net.ipv4.ip_forward: 1
+        networks:
+            network_a:
+                ipv4_address: 10.0.0.100
+            network_b:
+                ipv4_address: 20.0.0.100
+        entrypoint: /ws/entrypoint_rt.sh
+
+
+networks:
+    network_a:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.0.0.0/24
+    network_b:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 20.0.0.0/24
