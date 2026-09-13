@@ -104,7 +104,7 @@ vm2$ rc-service networking restart
 # 4. Setup DRBD
 - Install dependencies on both VMs.
 ```sh
-vm$ apk add cfdisk lvm2 drbd-utils lsblk
+vm$ apk add cfdisk lvm2 drbd-utils lsblk util-linux file
 
 vm$ echo 'export PATH=$PATH:/usr/lib/drbd/' >> ~/.bashrc
 vm$ source ~/.bashrc
