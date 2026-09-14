@@ -15,6 +15,6 @@ RUN chmod u+s /usr/lib/qemu/qemu-bridge-helper
 RUN mkdir ws
 WORKDIR /ws
 
-COPY *.sh /ws
+COPY *.sh /ws/
 
 CMD ["/ws/entrypoint.sh"]
