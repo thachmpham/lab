@@ -3,5 +3,5 @@ services:
         image: pxe
         build: .
         container_name: pxe
-        hostname: pxe
+        hostname: container
         privileged: true

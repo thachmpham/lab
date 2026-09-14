@@ -3,9 +3,8 @@ FROM ubuntu:26.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update
-RUN apt install -y isc-dhcp-server atftpd atftp rsyslog
-RUN apt install -y qemu-system syslinux-common pxelinux debootstrap
-RUN apt install -y wget vim iproute2 perl lsof file
+RUN apt install -y isc-dhcp-server atftpd atftp  qemu-system
+RUN apt install -y wget vim iproute2 perl lsof file rsyslog
 
 # setup qemu
 RUN mkdir -p /etc/qemu
@@ -20,9 +19,9 @@ RUN cat << 'EOF' >> /etc/dhcp/dhcpd.conf
 allow booting;
 allow bootp;
 subnet 192.0.0.0 netmask 255.255.255.0 {
-        range 192.0.0.100 192.0.0.150;
+        range 192.0.0.2 192.0.0.50;
         option broadcast-address 192.0.0.255;
-        next-server 192.0.0.2;
+        next-server 192.0.0.254;
         option subnet-mask 255.255.255.0;
         filename "/pxelinux.0";
 }
@@ -45,6 +44,6 @@ RUN perl -pi -e 's/--- quiet/--- console=ttyS0,19200 earlyprint=serial,ttyS0,192
 # helper scripts
 RUN mkdir /ws
 WORKDIR /ws
-COPY entrypoint.sh start_vm.sh /ws
+COPY *.sh /ws/
 
 CMD ["/ws/entrypoint.sh"]
