@@ -1,0 +1,7 @@
+services:
+    rpm:
+        container_name: rpm
+        hostname: cont
+        image: rpm
+        build: .
+        privileged: true
