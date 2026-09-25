@@ -1,0 +1,3 @@
+Host vm
+    HostName 192.0.0.10
+    User root
