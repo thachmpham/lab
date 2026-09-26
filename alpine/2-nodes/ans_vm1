@@ -1,0 +1,51 @@
+# Use keymap layout
+KEYMAPOPTS="us us"
+
+# Set hostname
+HOSTNAMEOPTS=vm1
+
+# Set device manager
+DEVDOPTS=mdev
+
+# Contents of /etc/network/interfaces
+INTERFACESOPTS="auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet dhcp
+hostname vm1
+
+auto eth1
+iface eth1 inet static
+    address 192.0.0.10/24
+"
+
+# Setup DNS
+# DNSOPTS="-d example.com 8.8.8.8"
+
+# Set timezone
+TIMEZONEOPTS="Hongkong"
+
+# set http/ftp proxy
+PROXYOPTS=none
+
+# Add first mirror (CDN)
+APKREPOSOPTS="-1"
+
+# Setup user
+USEROPTS="no"
+
+# Install Openssh
+SSHDOPTS=openssh
+
+# Setup NTP
+NTPOPTS="openntpd"
+
+# Setup disk
+DISKOPTS="-m sys /dev/sda"
+
+# Setup storage label
+LBUOPTS=none
+
+# Setup cache
+APKCACHEOPTS=none
