@@ -1,9 +1,5 @@
-# Example answer file for setup-alpine script
-# If you don't want to use a certain option, then comment it out
-
-# Use US layout with US variant
-# KEYMAPOPTS="us us"
-KEYMAPOPTS=none
+# Set keyman layout
+KEYMAPOPTS="us us"
 
 # Set hostname
 HOSTNAMEOPTS=vm
@@ -24,45 +20,32 @@ iface eth1 inet static
     address 192.0.0.10/24
 "
 
-# Import a wpa_supplicant config for wifi after interface setup
-# WIFIOPTS="/path/to/wpa_supplicant.conf"
-
-# Search domain of example.com, Google public nameserver
+# Set DNS
 # DNSOPTS="-d example.com 8.8.8.8"
 
-# Set timezone to UTC
-#TIMEZONEOPTS="UTC"
-TIMEZONEOPTS=none
+# Set timezone
+TIMEZONEOPTS="Asia/Ho_Chi_Minh"
 
 # set http/ftp proxy
-#PROXYOPTS="http://webproxy:8080"
 PROXYOPTS=none
 
 # Add first mirror (CDN)
 APKREPOSOPTS="-1"
 
-# Create admin user
-# USEROPTS="-a -u -g audio,input,video,netdev juser"
+# Setup user
 USEROPTS="no"
-#USERSSHKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIiHcbg/7ytfLFHUNLRgEAubFz/13SwXBOM/05GNZe4 juser@example.com"
-#USERSSHKEY="https://example.com/juser.keys"
 
 # Install Openssh
 SSHDOPTS=openssh
-#ROOTSSHKEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOIiHcbg/7ytfLFHUNLRgEAubFz/13SwXBOM/05GNZe4 juser@example.com"
-#ROOTSSHKEY="https://example.com/juser.keys"
 
-# Use openntpd
-# NTPOPTS="openntpd"
-NTPOPTS=none
+# Set NTP
+NTPOPTS="openntpd"
 
-# Use /dev/sda as a sys disk
-# DISKOPTS="-m sys /dev/sda"
+# Setup disk
 DISKOPTS="-m sys /dev/sda"
 
-# Setup storage with label APKOVL for config storage
-#LBUOPTS="LABEL=APKOVL"
+# Set disk label
 LBUOPTS=none
 
-#APKCACHEOPTS="/media/LABEL=APKOVL/cache"
+# setup cache
 APKCACHEOPTS=none

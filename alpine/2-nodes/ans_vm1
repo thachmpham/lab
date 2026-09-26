@@ -24,7 +24,7 @@ iface eth1 inet static
 # DNSOPTS="-d example.com 8.8.8.8"
 
 # Set timezone
-TIMEZONEOPTS="Hongkong"
+TIMEZONEOPTS="Asia/Ho_Chi_Minh"
 
 # set http/ftp proxy
 PROXYOPTS=none
