@@ -23,6 +23,5 @@ qemu-system-x86_64 -name vm \
     -nographic \
     -boot once=d -cdrom $iso_file \
     -drive file=$disk_a \
-    -drive file=$disk_b \
     -netdev user,id=net0 -device virtio-net-pci,netdev=net0 \
     -netdev bridge,br=br0,id=net1 -device virtio-net-pci,netdev=net1,mac=50:54:00:00:00:01
