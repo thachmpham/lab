@@ -1,4 +1,4 @@
-resource drbd0 {
+resource r0 {
     device minor 0;
     disk /dev/sdb1;
     meta-disk internal;
