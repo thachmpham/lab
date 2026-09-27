@@ -31,7 +31,7 @@ scp r0.res vm1:/etc/drbd.d/
 
 ssh vm1 bash << 'EOF'
     export PATH=$PATH:/usr/lib/drbd
-    drbdadm create-md r0
+    drbdadm create-md --force r0
     drbdadm up r0
     drbdadm primary --force r0
 EOF
