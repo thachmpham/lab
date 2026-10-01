@@ -11,7 +11,9 @@ RUN apt install -y vim openssh-client
 RUN mkdir -p /etc/qemu
 RUN touch /etc/qemu/bridge.conf
 RUN chmod 0640 /etc/qemu/bridge.conf
-RUN echo "allow br0" >> /etc/qemu/bridge.conf
+RUN echo "allow br1" >> /etc/qemu/bridge.conf
+RUN echo "allow br2" >> /etc/qemu/bridge.conf
+RUN echo "allow br3" >> /etc/qemu/bridge.conf
 RUN chmod u+s /usr/lib/qemu/qemu-bridge-helper
 
 # setup ssh

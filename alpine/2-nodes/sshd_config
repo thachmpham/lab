@@ -1,0 +1,4 @@
+# /etc/ssh/sshd_config for VMs
+PermitRootLogin yes
+PasswordAuthentication yes
+PermitEmptyPasswords yes

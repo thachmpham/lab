@@ -1,7 +1,9 @@
+# ~/.ssh/ssh_config for container
+
 Host vm1
-    HostName 192.0.0.10
+    HostName 191.0.0.10
     User root
 
 Host vm2
-    HostName 192.0.0.20
+    HostName 191.0.0.20
     User root
