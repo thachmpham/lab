@@ -1,0 +1,2 @@
+# Accept clients from 192.0.0.0/24 to access /srv/nfs
+/srv/nfs 192.0.0.0/24(rw,sync,no_subtree_check)
