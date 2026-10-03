@@ -14,6 +14,7 @@ ssh vm2 rc-service nfs start
 # setup vm1 as nfs server
 scp /ws/exports vm1:/etc/
 ssh vm1 mkdir -p /srv/nfs
+ssh vm1 chmod -R 777 /srv/nfs
 ssh vm1 exportfs -a
 
 
