@@ -27,7 +27,7 @@ EOF
 
 
 # setup drbd resource r0
-scp r0.res vm1:/etc/drbd.d/
+scp /ws/r0.res vm1:/etc/drbd.d/
 
 ssh vm1 bash << 'EOF'
     export PATH=$PATH:/usr/lib/drbd
