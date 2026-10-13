@@ -34,4 +34,5 @@ ssh vm1 bash << 'EOF'
     drbdadm create-md --force r0
     drbdadm up r0
     drbdadm primary --force r0
+    mkfs.ext4 /dev/drbd0
 EOF
