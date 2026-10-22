@@ -5,7 +5,7 @@ disk_b="disk_b.qcow2"
 disk_c="disk_c.qcow2"
 
 qemu-system-x86_64 -name vm \
-    -m 4096 \
+    -m 2048 \
     -smp cpus=2 \
     -nographic \
     -drive file=$disk_a \

@@ -1,7 +1,7 @@
 FROM fedora:44
 
 RUN dnf install -y qemu iproute ssh
-RUN dnf install -y which file wget
+RUN dnf install -y which file wget ping
 
 # setup qemu
 RUN echo "allow br1" >> /etc/qemu/bridge.conf
