@@ -21,9 +21,9 @@ RUN chmod 700 /root/.ssh
 COPY ssh_config /root/.ssh/config
 RUN chmod 600 /root/.ssh/config
 
-RUN mkdir ws
+# setup workspace
+RUN mkdir /ws
 WORKDIR /ws
-
 COPY *.sh /ws/
 
 CMD ["/ws/entrypoint.sh"]

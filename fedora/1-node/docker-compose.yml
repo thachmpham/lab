@@ -1,0 +1,7 @@
+services:
+  fdr:
+    build: .
+    image: fdr
+    container_name: f1
+    hostname: f1
+    privileged: true
