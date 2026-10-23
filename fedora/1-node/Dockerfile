@@ -1,6 +1,6 @@
 FROM fedora:44
 
-RUN dnf install -y qemu iproute ssh
+RUN dnf install -y qemu iproute ssh procps-ng
 RUN dnf install -y which file wget ping
 
 # setup qemu
