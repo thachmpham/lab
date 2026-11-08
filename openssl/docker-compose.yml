@@ -1,0 +1,12 @@
+services:
+  h1:
+    container_name: h1
+    hostname: h1
+    image: openssl
+    build: .
+    privileged: true
+  h2:
+    container_name: h2
+    hostname: h2
+    image: openssl
+    privileged: true
