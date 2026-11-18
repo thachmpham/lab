@@ -1,0 +1,22 @@
+services:
+  f33:
+    hostname: f33
+    container_name: f33
+    image: f33
+    build:
+      context: .
+      dockerfile: Dockerfile-f33
+    working_dir: /ws
+    volumes:
+      - .:/ws
+
+  f44:
+    hostname: f44
+    container_name: f44
+    image: f44
+    build:
+      context: .
+      dockerfile: Dockerfile-f44
+    working_dir: /ws
+    volumes:
+      - .:/ws

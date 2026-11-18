@@ -1,0 +1,4 @@
+FROM fedora:33
+RUN dnf group install -y c-development
+RUN dnf install -y patchelf
+CMD ["tail", "-f", "/dev/null"]
