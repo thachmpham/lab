@@ -1,4 +1,5 @@
 FROM fedora:44
 RUN dnf group install -y c-development
-RUN dnf install -y patchelf
+RUN dnf install -y patchelf pip
+RUN pip install lief
 CMD ["tail", "-f", "/dev/null"]
